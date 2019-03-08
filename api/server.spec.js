@@ -1,10 +1,5 @@
-const request = require('supertest');
-const server = require('./server.js');
-
-describe('Get /', () => {
-    it('Should return status 200 on get request', async() => {
-        const res = await request(server).get('/api/users')
-
-        expect(res.status).toBe(200)
+describe('server', () => {
+    it('Should be running on test environment', () => {
+        expect(process.env.DB_ENV).toBe('testing')
     });
 });
