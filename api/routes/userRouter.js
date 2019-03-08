@@ -20,4 +20,23 @@ router.post('/', (req, res) => {
         })
 });
 
+router.delete('/:id', (req, res) => {
+    usersDb.remove(req.params.id)
+        .then(count => {
+            if(count){
+                res.status(204).end();
+            }else{
+                res.status(404).json({
+                    message: "User not found with given id"
+                })
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: "Server could not remove user",
+                error
+            })
+        })
+});
+
 module.exports = router;

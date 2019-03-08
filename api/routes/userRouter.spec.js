@@ -4,11 +4,11 @@ const server = require('../server.js');
 const db = require('../../database/dbConfig.js')
 
 describe('User Router', () => {
-    describe('Post /api/users', () => {
-        afterEach(async () => {
-            await db('users').truncate()
-        })
+    afterEach(async () => {
+        await db('users').truncate()
+    })
 
+    describe('Post /api/users', () => {
         it('Should insert user to database', async() => {
             const res = await request(server).post('/api/users').send({
                 username: 'kieran', 
@@ -37,6 +37,12 @@ describe('User Router', () => {
             const res = await request(server).del('/api/users/1')
 
             expect(res.status).toBe(204);
+        });
+
+        it('Should return 404 if couldnt find user with given id', async() => {
+            const res = await request(server).del('/api/users/1');
+
+            expect(res.status).toBe(404)
         });
     });
 });
